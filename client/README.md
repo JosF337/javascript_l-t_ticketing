@@ -1,16 +1,22 @@
-# React + Vite
+# SupportX Helpdesk Client (Angular 18 Standalone Architecture)
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Modern, reactive Angular single-page application (SPA) for the Customer Support Helpdesk & Ticketing System.
 
-Currently, two official plugins are available:
+## Features
+- **Standalone Components & RxJS / Signals**: Zero-boilerplate component architecture with reactive streams.
+- **WebSocket Real-Time Integration**: Instant event streaming with Socket.io (`ticket:created`, `ticket:assigned`, `ticket:status_changed`, `comment:added`, `sla:breach_alert`).
+- **Obsidian Dark Glassmorphic Design System**: Polished CSS variables, backdrop blur filters, glowing badges, and interactive modals.
+- **Role-Based Portals**:
+  - **Customer Portal**: Live SLA countdowns, ticket ingestion, ratings (CSAT).
+  - **Agent Portal**: Caseload metrics, queue claiming, state machine controls, staff-only internal notes.
+  - **Manager Portal**: Executive BI KPIs, SLA compliance rates, agent workload distribution, SLA matrix rule CRUD.
+- **1-Click Persona Switcher**: Instant switching between Customer, Agent, Manager, and Admin demo accounts.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Running Locally
+```bash
+# Start standalone Angular dev server on port 5173
+npm run dev
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+# Compile production bundle to dist/
+npm run build
+```

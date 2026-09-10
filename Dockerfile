@@ -1,6 +1,6 @@
 # =========================================================================
 # Multi-Stage Production Dockerfile for Customer Support Helpdesk (P14)
-# Stage 1: Build Vite React Client
+# Stage 1: Build Angular 18 Standalone SPA Client
 # Stage 2: Install Backend Production Dependencies
 # Stage 3: Minimal, Secure Node.js 20 Alpine Runner
 # =========================================================================

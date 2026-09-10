@@ -37,12 +37,16 @@ const { swaggerUi, swaggerDocument, swaggerUiOptions } = require('./config/swagg
 app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, swaggerUiOptions));
 app.get('/api/docs.json', (req, res) => res.json(swaggerDocument));
 
-// Serve React Frontend Static Build if present (Phase 17)
+// Serve Angular Frontend Static Build if present (Phase 17)
 const path = require('path');
 const fs = require('fs');
-const clientDistPath = path.join(__dirname, 'client', 'dist');
+const clientDistBrowser = path.join(__dirname, 'client', 'dist', 'browser');
+const clientDistRoot = path.join(__dirname, 'client', 'dist');
+const clientDistPath = fs.existsSync(path.join(clientDistBrowser, 'index.html'))
+  ? clientDistBrowser
+  : (fs.existsSync(path.join(clientDistRoot, 'index.html')) ? clientDistRoot : null);
 
-if (fs.existsSync(clientDistPath)) {
+if (clientDistPath) {
   app.use(express.static(clientDistPath));
   app.get('{*splat}', (req, res, next) => {
     if (req.path.startsWith('/api')) {
