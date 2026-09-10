@@ -12,8 +12,7 @@
     "client:build": "npm --prefix client run build",
     "build": "npm --prefix client install && npm --prefix client run build"
   },
-  "keywords": [],
-  "author": "",
+  "author": "Joel Jacob Roji <joeljacobroji06@gmail.com> (https://github.com/JoelJacobRoji)",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
