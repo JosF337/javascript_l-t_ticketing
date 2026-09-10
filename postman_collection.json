@@ -1,0 +1,545 @@
+{
+  "info": {
+    "_postman_id": "c1f7a5b3-8a9d-4e2b-91c6-5f337helpdesk",
+    "name": "P14 - Customer Support Helpdesk & Ticketing System",
+    "description": "Complete Postman collection for P14 - Customer Support Helpdesk & Ticketing System covering all 13 mandatory modules and the 6 required test scenarios.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:5000", "type": "string" },
+    { "key": "customerToken", "value": "", "type": "string" },
+    { "key": "agentToken", "value": "", "type": "string" },
+    { "key": "managerToken", "value": "", "type": "string" },
+    { "key": "ticketId", "value": "", "type": "string" },
+    { "key": "agentId", "value": "", "type": "string" },
+    { "key": "slaRuleId", "value": "", "type": "string" }
+  ],
+  "item": [
+    {
+      "name": "01 - Authentication & Users (Module 1)",
+      "item": [
+        {
+          "name": "Register Customer",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Alice Customer\",\n  \"email\": \"customer@helpdesk.com\",\n  \"password\": \"Password@123\",\n  \"role\": \"customer\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/auth/register", "host": ["{{baseUrl}}"], "path": ["api", "auth", "register"] }
+          }
+        },
+        {
+          "name": "Register Support Agent",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Bob Agent\",\n  \"email\": \"agent@helpdesk.com\",\n  \"password\": \"Password@123\",\n  \"role\": \"agent\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/auth/register", "host": ["{{baseUrl}}"], "path": ["api", "auth", "register"] }
+          }
+        },
+        {
+          "name": "Register Manager",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Carol Manager\",\n  \"email\": \"manager@helpdesk.com\",\n  \"password\": \"Password@123\",\n  \"role\": \"manager\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/auth/register", "host": ["{{baseUrl}}"], "path": ["api", "auth", "register"] }
+          }
+        },
+        {
+          "name": "Login Customer",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.data && jsonData.data.token) {",
+                  "    pm.collectionVariables.set('customerToken', jsonData.data.token);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"customer@helpdesk.com\",\n  \"password\": \"Password@123\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/auth/login", "host": ["{{baseUrl}}"], "path": ["api", "auth", "login"] }
+          }
+        },
+        {
+          "name": "Login Support Agent",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.data && jsonData.data.token) {",
+                  "    pm.collectionVariables.set('agentToken', jsonData.data.token);",
+                  "    pm.collectionVariables.set('agentId', jsonData.data._id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"agent@helpdesk.com\",\n  \"password\": \"Password@123\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/auth/login", "host": ["{{baseUrl}}"], "path": ["api", "auth", "login"] }
+          }
+        },
+        {
+          "name": "Login Manager",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.data && jsonData.data.token) {",
+                  "    pm.collectionVariables.set('managerToken', jsonData.data.token);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"manager@helpdesk.com\",\n  \"password\": \"Password@123\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/auth/login", "host": ["{{baseUrl}}"], "path": ["api", "auth", "login"] }
+          }
+        },
+        {
+          "name": "Get Current Profile (Me)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{customerToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/auth/me", "host": ["{{baseUrl}}"], "path": ["api", "auth", "me"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "02 - Category & SLA Management (Module 10)",
+      "item": [
+        {
+          "name": "Create SLA Rule (Manager)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.data && jsonData.data._id) {",
+                  "    pm.collectionVariables.set('slaRuleId', jsonData.data._id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{managerToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"category\": \"Software\",\n  \"priority\": \"Urgent\",\n  \"resolutionHours\": 4\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/sla", "host": ["{{baseUrl}}"], "path": ["api", "sla"] }
+          }
+        },
+        {
+          "name": "List All SLA Rules",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{managerToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/sla", "host": ["{{baseUrl}}"], "path": ["api", "sla"] }
+          }
+        },
+        {
+          "name": "Update SLA Rule Resolution Hours",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{managerToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"resolutionHours\": 6\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/sla/{{slaRuleId}}", "host": ["{{baseUrl}}"], "path": ["api", "sla", "{{slaRuleId}}"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "03 - Ticket Management & Lifecycle (Modules 2, 3, 4, 5, 9)",
+      "item": [
+        {
+          "name": "Customer Creates Ticket (Modules 2 & 5)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.data && jsonData.data._id) {",
+                  "    pm.collectionVariables.set('ticketId', jsonData.data._id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{customerToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Production API Gateway 502 Bad Gateway\",\n  \"category\": \"Software\",\n  \"priority\": \"Urgent\",\n  \"description\": \"Payment microservice cannot communicate with authentication cluster.\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/tickets", "host": ["{{baseUrl}}"], "path": ["api", "tickets"] }
+          }
+        },
+        {
+          "name": "List Tickets (Role Scoped)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{customerToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/tickets", "host": ["{{baseUrl}}"], "path": ["api", "tickets"] }
+          }
+        },
+        {
+          "name": "Get Ticket by ID",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{customerToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/tickets/{{ticketId}}", "host": ["{{baseUrl}}"], "path": ["api", "tickets", "{{ticketId}}"] }
+          }
+        },
+        {
+          "name": "Manager Assigns Ticket to Agent (Module 3)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{managerToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"agentId\": \"{{agentId}}\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/tickets/{{ticketId}}/assign", "host": ["{{baseUrl}}"], "path": ["api", "tickets", "{{ticketId}}", "assign"] }
+          }
+        },
+        {
+          "name": "Manager Auto-Assigns Ticket (Module 3)",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Authorization", "value": "Bearer {{managerToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/tickets/{{ticketId}}/auto-assign", "host": ["{{baseUrl}}"], "path": ["api", "tickets", "{{ticketId}}", "auto-assign"] }
+          }
+        },
+        {
+          "name": "Agent Updates Status to In Progress (Module 4)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{agentToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"In Progress\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/tickets/{{ticketId}}/status", "host": ["{{baseUrl}}"], "path": ["api", "tickets", "{{ticketId}}", "status"] }
+          }
+        },
+        {
+          "name": "Escalate Ticket to Management (Module 9)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{agentToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reason\": \"High business impact affecting online transactions\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/tickets/{{ticketId}}/escalate", "host": ["{{baseUrl}}"], "path": ["api", "tickets", "{{ticketId}}", "escalate"] }
+          }
+        },
+        {
+          "name": "Resolve Ticket (Module 4)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{managerToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"Resolved\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/tickets/{{ticketId}}/status", "host": ["{{baseUrl}}"], "path": ["api", "tickets", "{{ticketId}}", "status"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "04 - Comments & Internal Notes (Modules 7 & 8)",
+      "item": [
+        {
+          "name": "Customer Posts Public Reply (Module 7)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{customerToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"message\": \"Thank you, we noticed the issue after the 10:00 AM release.\",\n  \"isInternal\": false\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/tickets/{{ticketId}}/comments", "host": ["{{baseUrl}}"], "path": ["api", "tickets", "{{ticketId}}", "comments"] }
+          }
+        },
+        {
+          "name": "Agent Adds Private Internal Note (Module 8)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{agentToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"message\": \"[INTERNAL NOTE] Rollback completed on pod 4. Monitoring throughput.\",\n  \"isInternal\": true\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/tickets/{{ticketId}}/comments", "host": ["{{baseUrl}}"], "path": ["api", "tickets", "{{ticketId}}", "comments"] }
+          }
+        },
+        {
+          "name": "Customer Views Comments (Internal Notes Hidden)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{customerToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/tickets/{{ticketId}}/comments", "host": ["{{baseUrl}}"], "path": ["api", "tickets", "{{ticketId}}", "comments"] }
+          }
+        },
+        {
+          "name": "Agent Views Comments (All Notes Visible)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{agentToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/tickets/{{ticketId}}/comments", "host": ["{{baseUrl}}"], "path": ["api", "tickets", "{{ticketId}}", "comments"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "05 - SLA Breach Tracking (Module 6)",
+      "item": [
+        {
+          "name": "Scan & Flag SLA Breached Tickets",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{managerToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/tickets/breaches/check", "host": ["{{baseUrl}}"], "path": ["api", "tickets", "breaches", "check"] }
+          }
+        },
+        {
+          "name": "Query Breached Tickets Filter",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{managerToken}}" }],
+            "url": {
+              "raw": "{{baseUrl}}/api/tickets?breached=true",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "tickets"],
+              "query": [{ "key": "breached", "value": "true" }]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "06 - Customer Satisfaction Rating (Module 11)",
+      "item": [
+        {
+          "name": "Customer Rates Resolved Ticket",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{customerToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ticketId\": \"{{ticketId}}\",\n  \"score\": 5,\n  \"comment\": \"Exceptional support and rapid problem resolution!\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/ratings", "host": ["{{baseUrl}}"], "path": ["api", "ratings"] }
+          }
+        },
+        {
+          "name": "Get Rating for Ticket",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{customerToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/ratings/ticket/{{ticketId}}", "host": ["{{baseUrl}}"], "path": ["api", "ratings", "ticket", "{{ticketId}}"] }
+          }
+        },
+        {
+          "name": "View All Ratings Summary (Manager)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{managerToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/ratings", "host": ["{{baseUrl}}"], "path": ["api", "ratings"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "07 - Manager Analytics & Workload (Modules 12 & 13)",
+      "item": [
+        {
+          "name": "SLA Compliance Report (Sample Endpoint #7)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{managerToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/manager/reports/sla", "host": ["{{baseUrl}}"], "path": ["api", "manager", "reports", "sla"] }
+          }
+        },
+        {
+          "name": "Agent Workload Dashboard (Module 12)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{managerToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/manager/reports/agent-workload", "host": ["{{baseUrl}}"], "path": ["api", "manager", "reports", "agent-workload"] }
+          }
+        },
+        {
+          "name": "Ticket Volume Trends (Module 13)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{managerToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/manager/reports/volume-trends", "host": ["{{baseUrl}}"], "path": ["api", "manager", "reports", "volume-trends"] }
+          }
+        },
+        {
+          "name": "Category Breakdown (Module 13)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{managerToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/manager/reports/category-breakdown", "host": ["{{baseUrl}}"], "path": ["api", "manager", "reports", "category-breakdown"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "08 - Instructor Test Failure Scenarios",
+      "item": [
+        {
+          "name": "Scenario 2: Validation Failure - Missing Description (400)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{customerToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Missing description\",\n  \"category\": \"Software\",\n  \"priority\": \"Low\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/tickets", "host": ["{{baseUrl}}"], "path": ["api", "tickets"] }
+          }
+        },
+        {
+          "name": "Scenario 3: Authentication Failure - No Token (401)",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseUrl}}/api/tickets", "host": ["{{baseUrl}}"], "path": ["api", "tickets"] }
+          }
+        },
+        {
+          "name": "Scenario 4: Authorization Failure - Customer Calls Manager Route (403)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{customerToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/manager/reports/sla", "host": ["{{baseUrl}}"], "path": ["api", "manager", "reports", "sla"] }
+          }
+        },
+        {
+          "name": "Scenario 5A: Business-Rule Conflict - Illegal Transition Open to Closed (409)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{managerToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"Closed\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/tickets/{{ticketId}}/status", "host": ["{{baseUrl}}"], "path": ["api", "tickets", "{{ticketId}}", "status"] }
+          }
+        },
+        {
+          "name": "Scenario 5B: Business-Rule Conflict - Duplicate Rating on Closed Ticket (409)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{customerToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ticketId\": \"{{ticketId}}\",\n  \"score\": 4,\n  \"comment\": \"Attempting duplicate rating\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/ratings", "host": ["{{baseUrl}}"], "path": ["api", "ratings"] }
+          }
+        },
+        {
+          "name": "Scenario 6: Not-Found Case - Invalid Ticket ID (404)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{managerToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/tickets/65f1a2b3c4d5e6f7a8b9c0d1", "host": ["{{baseUrl}}"], "path": ["api", "tickets", "65f1a2b3c4d5e6f7a8b9c0d1"] }
+          }
+        }
+      ]
+    }
+  ]
+}

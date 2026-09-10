@@ -1,9 +1,24 @@
-Set-Content routes/ratingRoutes.js "const express = require('express');
+const express = require('express');
 const router = express.Router();
+const {
+  createRating,
+  getRatingByTicket,
+  getAllRatings
+} = require('../controllers/ratingController');
+const { protect } = require('../middleware/auth');
+const { allowRoles } = require('../middleware/roleCheck');
+const { validate, schemas } = require('../middleware/validate');
 
-// POST /api/ratings
-router.post('/', (req, res) => {
-  res.json({ success: true, message: 'Rating route working' });
-});
+// All rating routes require authentication
+router.use(protect);
 
-module.exports = router;"
+// POST /api/ratings - Customer submits rating (Module 11)
+// GET /api/ratings - View ratings
+router.route('/')
+  .post(allowRoles('customer'), validate(schemas.createRating), createRating)
+  .get(getAllRatings);
+
+// GET /api/ratings/ticket/:ticketId - Rating for specific ticket
+router.get('/ticket/:ticketId', getRatingByTicket);
+
+module.exports = router;

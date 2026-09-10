@@ -1,14 +1,16 @@
-Set-Content routes/authRoutes.js "const express = require('express');
+const express = require('express');
 const router = express.Router();
+const { register, login, getMe } = require('../controllers/authController');
+const { protect } = require('../middleware/auth');
+const { validate, schemas } = require('../middleware/validate');
 
 // POST /api/auth/register
-router.post('/register', (req, res) => {
-  res.json({ success: true, message: 'Register route working' });
-});
+router.post('/register', validate(schemas.register), register);
 
 // POST /api/auth/login
-router.post('/login', (req, res) => {
-  res.json({ success: true, message: 'Login route working' });
-});
+router.post('/login', validate(schemas.login), login);
 
-module.exports = router;"
+// GET /api/auth/me
+router.get('/me', protect, getMe);
+
+module.exports = router;
