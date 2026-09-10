@@ -149,7 +149,7 @@ export function Navbar({
 
         {/* Swagger Docs Link */}
         <a 
-          href="http://localhost:5000/api/docs" 
+          href="/api/docs" 
           target="_blank" 
           rel="noopener noreferrer" 
           className="btn btn-secondary btn-sm"
