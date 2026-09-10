@@ -44,7 +44,7 @@ const clientDistPath = path.join(__dirname, 'client', 'dist');
 
 if (fs.existsSync(clientDistPath)) {
   app.use(express.static(clientDistPath));
-  app.get('*', (req, res, next) => {
+  app.get('{*splat}', (req, res, next) => {
     if (req.path.startsWith('/api')) {
       return next();
     }
