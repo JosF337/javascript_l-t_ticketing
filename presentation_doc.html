@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SupportX | Project Technical Presentation Guide</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+    @page {
+      size: A4;
+      margin: 18mm 16mm 18mm 16mm;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: #1e293b;
+      line-height: 1.55;
+      font-size: 13px;
+      background: #ffffff;
+    }
+
+    .header-banner {
+      background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 60%, #312e81 100%);
+      color: #ffffff;
+      padding: 22px 26px;
+      border-radius: 12px;
+      margin-bottom: 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header-title {
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .header-title span {
+      color: #38bdf8;
+    }
+
+    .header-subtitle {
+      font-size: 13px;
+      color: #cbd5e1;
+      margin-top: 4px;
+    }
+
+    .header-meta {
+      text-align: right;
+      font-size: 11px;
+      color: #94a3b8;
+    }
+
+    .header-meta strong {
+      color: #ffffff;
+      font-size: 12px;
+    }
+
+    .badge-cloud {
+      display: inline-block;
+      background: rgba(56, 189, 248, 0.2);
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      color: #38bdf8;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 999px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    h2 {
+      font-size: 16px;
+      font-weight: 800;
+      color: #0f172a;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 5px;
+      margin-top: 20px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    h3 {
+      font-size: 14px;
+      font-weight: 700;
+      color: #1e293b;
+      margin-top: 10px;
+      margin-bottom: 6px;
+    }
+
+    p {
+      margin-bottom: 8px;
+      color: #334155;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 12px 14px;
+    }
+
+    .card-title {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 4px;
+      color: #475569;
+    }
+
+    .card-value {
+      font-size: 14px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0 16px 0;
+      font-size: 12px;
+    }
+
+    th, td {
+      padding: 8px 10px;
+      border: 1px solid #e2e8f0;
+      text-align: left;
+    }
+
+    th {
+      background: #f1f5f9;
+      color: #1e293b;
+      font-weight: 700;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    tr:nth-child(even) {
+      background: #f8fafc;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+
+    .badge-open { background: #e0f2fe; color: #0284c7; }
+    .badge-prog { background: #ede9fe; color: #6d28d9; }
+    .badge-resolved { background: #dcfce7; color: #15803d; }
+    .badge-urgent { background: #ffe4e6; color: #e11d48; }
+    .badge-warning { background: #fef3c7; color: #b45309; }
+
+    .callout {
+      background: #eff6ff;
+      border-left: 4px solid #3b82f6;
+      padding: 10px 14px;
+      border-radius: 0 6px 6px 0;
+      margin: 12px 0;
+      font-size: 12px;
+      color: #1e40af;
+    }
+
+    .callout strong {
+      color: #1e3a8a;
+    }
+
+    .qa-box {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 10px 12px;
+      margin-bottom: 8px;
+    }
+
+    .qa-q {
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 3px;
+    }
+
+    .qa-a {
+      color: #334155;
+      font-size: 12px;
+    }
+
+    .url-chip {
+      font-family: 'JetBrains Mono', monospace;
+      background: #f1f5f9;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #0f172a;
+      font-size: 11px;
+    }
+
+    .page-break {
+      page-break-before: always;
+    }
+
+    .footer-note {
+      margin-top: 24px;
+      padding-top: 10px;
+      border-top: 1px solid #e2e8f0;
+      font-size: 11px;
+      color: #94a3b8;
+      display: flex;
+      justify-content: space-between;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header Banner -->
+  <div class="header-banner">
+    <div>
+      <div class="badge-cloud">Enterprise Cloud Project</div>
+      <div class="header-title">Support<span>X</span> Helpdesk & SLA Engine</div>
+      <div class="header-subtitle">Full-Stack Customer Operations & Service Level Management System</div>
+    </div>
+    <div class="header-meta">
+      <div>Author: <strong>Joel Jacob Roji</strong></div>
+      <div>Architecture: <strong>Angular 18 Standalone + Node.js</strong></div>
+      <div>Database: <strong>MongoDB Atlas (Cloud)</strong></div>
+      <div>Deployment: <strong>Render Cloud (Live)</strong></div>
+    </div>
+  </div>
+
+  <!-- Section 1: Overview -->
+  <h2>📌 1. Project Summary (The 30-Second Elevator Pitch)</h2>
+  <p>
+    <strong>SupportX</strong> is a production-ready enterprise customer service platform designed to automate ticket lifecycle management, prevent breached service level agreements (SLAs), balance engineering workloads, and bridge communication between customers and technical support agents in real time.
+  </p>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">🚨 The Problem</div>
+      <div class="card-value" style="font-size: 12px; font-weight: normal; color: #475569;">
+        Unmanaged ticket backlogs, missed SLA deadlines, overloaded support agents, and sensitive internal diagnostic notes accidentally leaking to customers.
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">💡 The Solution (SupportX)</div>
+      <div class="card-value" style="font-size: 12px; font-weight: normal; color: #475569;">
+        Dynamic SLA calculation engine, automated workload-based dispatching, finite state machine lifecycle guard, strict staff note isolation, and real-time WebSockets.
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 2: Technology Stack -->
+  <h2>🛠️ 2. Technology Stack & Architecture</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Layer</th>
+        <th>Technologies Used</th>
+        <th>Role & Key Benefits</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Frontend</strong></td>
+        <td><strong>Angular 18 (Standalone)</strong>, TypeScript, RxJS</td>
+        <td>Modern component architecture, reactive streams, zero-boilerplate standalone setup, Obsidian dark UI.</td>
+      </tr>
+      <tr>
+        <td><strong>Backend API</strong></td>
+        <td><strong>Node.js</strong>, <strong>Express 5</strong>, RESTful API</td>
+        <td>Event-driven REST server handling authentication, RBAC, SLA algorithms, and state machines.</td>
+      </tr>
+      <tr>
+        <td><strong>Real-Time</strong></td>
+        <td><strong>Socket.io (WebSockets)</strong></td>
+        <td>Instant two-way comment broadcasting and SLA breach alert push notifications.</td>
+      </tr>
+      <tr>
+        <td><strong>Database</strong></td>
+        <td><strong>MongoDB Atlas (Cloud)</strong>, Mongoose ODM</td>
+        <td>Scalable document store with high-performance aggregation pipelines for BI analytics.</td>
+      </tr>
+      <tr>
+        <td><strong>Documentation</strong></td>
+        <td><strong>Swagger UI / OpenAPI 3.0.3</strong></td>
+        <td>Interactive live API documentation and execution console at <code>/api/docs</code>.</td>
+      </tr>
+      <tr>
+        <td><strong>Container & Cloud</strong></td>
+        <td><strong>Docker Multi-Stage</strong>, <strong>Render</strong></td>
+        <td>Automated CI/CD cloud deployment running lightweight Node 20 Alpine containers.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Section 3: Core Features -->
+  <h2>🔑 3. Core Functional Modules (How It Works)</h2>
+
+  <div class="callout">
+    <strong>⚡ Dynamic SLA Engine:</strong> When a customer submits a ticket, the system matches its <em>Category</em> (Software, Hardware, Network, Billing) and <em>Priority</em> (Urgent, High, Medium, Low) against the database SLA matrix to automatically compute the exact resolution due date. <em>(e.g., Urgent Software = 4 Hours Guaranteed Resolution)</em>.
+  </div>
+
+  <div class="callout" style="border-left-color: #8b5cf6; background: #f5f3ff; color: #5b21b6;">
+    <strong>🔒 Staff Privacy Isolation (Module 8):</strong> Support agents can flag internal comments as <em>"Private Internal Notes"</em>. The database query automatically strips these notes when a customer fetches comments, preventing internal technical discussions from being exposed.
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Module</th>
+        <th>Feature Name</th>
+        <th>How It Works In Simple Terms</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Module 1</strong></td>
+        <td>Role-Based Access (RBAC)</td>
+        <td>Secures endpoints for 4 discrete roles: <code>customer</code>, <code>agent</code>, <code>manager</code>, <code>admin</code>.</td>
+      </tr>
+      <tr>
+        <td><strong>Module 3</strong></td>
+        <td>Auto-Dispatch Engine</td>
+        <td>Counts active tickets per agent and automatically assigns new tickets to the least loaded engineer.</td>
+      </tr>
+      <tr>
+        <td><strong>Module 4</strong></td>
+        <td>Finite State Machine</td>
+        <td>Strictly enforces status flow: <code>Open</code> ➔ <code>In Progress</code> ➔ <code>On Hold/Resolved</code> ➔ <code>Closed</code>.</td>
+      </tr>
+      <tr>
+        <td><strong>Module 6 & 9</strong></td>
+        <td>Breach Scanner & Escalation</td>
+        <td>Background scanner flags SLA breaches and enables agents to escalate tickets with justification notes.</td>
+      </tr>
+      <tr>
+        <td><strong>Module 11</strong></td>
+        <td>Customer CSAT Rating</td>
+        <td>Resolved tickets allow customers to submit 1–5 star ratings with feedback and confetti effects.</td>
+      </tr>
+      <tr>
+        <td><strong>Module 12 & 13</strong></td>
+        <td>Manager BI Analytics</td>
+        <td>Aggregation pipelines compute SLA Compliance Rate %, Agent Workload, and Category breakdowns.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="page-break"></div>
+
+  <!-- Header Banner (Page 2) -->
+  <div class="header-banner" style="margin-top: 0;">
+    <div>
+      <div class="header-title" style="font-size: 18px;">Support<span>X</span> Presentation & Demo Guide</div>
+    </div>
+    <div class="header-meta">
+      <div>Live App: <span class="url-chip">https://helpdesk-ticketing-system-k3py.onrender.com</span></div>
+    </div>
+  </div>
+
+  <!-- Section 4: Live Demo Script -->
+  <h2>🎬 4. Step-by-Step Presentation & Demo Script</h2>
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 10%;">Step</th>
+        <th style="width: 35%;">Action on Live Site</th>
+        <th style="width: 55%;">What to Say to the Audience / Evaluator</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>1</strong></td>
+        <td>Open the <a href="https://helpdesk-ticketing-system-k3py.onrender.com/" target="_blank">Live Render URL</a></td>
+        <td><em>"Here is SupportX running live on Render. Notice the dark glassmorphic design and the green 'Live WS' indicator showing active WebSocket connectivity."</em></td>
+      </tr>
+      <tr>
+        <td><strong>2</strong></td>
+        <td>Click <strong>Customer Charlie</strong> in the top navbar</td>
+        <td><em>"Our 1-click persona switcher allows us to instantly simulate any user role without manually typing passwords."</em></td>
+      </tr>
+      <tr>
+        <td><strong>3</strong></td>
+        <td>Click <strong>+ Create New Support Ticket</strong></td>
+        <td><em>"When we choose 'Software' and 'Urgent', our dynamic SLA engine immediately calculates a 4-hour resolution target."</em></td>
+      </tr>
+      <tr>
+        <td><strong>4</strong></td>
+        <td>Submit ticket & view grid</td>
+        <td><em>"The ticket appears with a live countdown timer showing the remaining time before SLA breach."</em></td>
+      </tr>
+      <tr>
+        <td><strong>5</strong></td>
+        <td>Switch to <strong>Agent Alice</strong></td>
+        <td><em>"The Agent Portal displays live caseload metrics. Alice claims the ticket and transitions it from Open to In Progress."</em></td>
+      </tr>
+      <tr>
+        <td><strong>6</strong></td>
+        <td>Post an <strong>Internal Note</strong> (locked)</td>
+        <td><em>"By checking 'Staff Private Note', Alice records internal diagnostics. This note is strictly invisible to the customer."</em></td>
+      </tr>
+      <tr>
+        <td><strong>7</strong></td>
+        <td>Click <strong>Resolve Ticket</strong></td>
+        <td><em>"The ticket is marked Resolved according to our finite state machine rules."</em></td>
+      </tr>
+      <tr>
+        <td><strong>8</strong></td>
+        <td>Switch to Customer & <strong>Rate Ticket</strong></td>
+        <td><em>"The customer sees the resolution and rates the service 5 stars with feedback."</em></td>
+      </tr>
+      <tr>
+        <td><strong>9</strong></td>
+        <td>Switch to <strong>Manager Sarah</strong></td>
+        <td><em>"Manager Sarah reviews the Executive BI dashboard: real-time SLA Compliance %, Agent Workloads, and SLA Matrix rule editor."</em></td>
+      </tr>
+      <tr>
+        <td><strong>10</strong></td>
+        <td>Click <strong>API Docs</strong> button</td>
+        <td><em>"Our OpenAPI / Swagger specification at /api/docs lets developers test every endpoint interactively."</em></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Section 5: Technical Defense Q&A -->
+  <h2>💡 5. Technical Defense & Viva Q&A Guide</h2>
+
+  <div class="qa-box">
+    <div class="qa-q">Q1: Why did you choose Angular 18 Standalone Components?</div>
+    <div class="qa-a"><strong>Answer:</strong> Standalone components remove legacy <code>NgModule</code> overhead, enable clean dependency injection, reduce initial bundle size to ~426 KB, and integrate natively with TypeScript and RxJS reactive streams.</div>
+  </div>
+
+  <div class="qa-box">
+    <div class="qa-q">Q2: How is the SLA deadline calculated?</div>
+    <div class="qa-a"><strong>Answer:</strong> The SLA Helper queries the database <code>SlaRule</code> matrix matching <code>category</code> and <code>priority</code>. It adds the configured <code>resolutionHours</code> to <code>Date.now()</code> and stores <code>slaDueAt</code> in the ticket document.</div>
+  </div>
+
+  <div class="qa-box">
+    <div class="qa-q">Q3: How do you prevent race conditions when auto-assigning agents?</div>
+    <div class="qa-a"><strong>Answer:</strong> The auto-assignment engine runs an aggregation query counting active tickets (<code>Open</code>, <code>In Progress</code>, <code>On Hold</code>) per agent and atomically assigns the ticket to the agent with the minimum active count.</div>
+  </div>
+
+  <div class="qa-box">
+    <div class="qa-q">Q4: How does privacy isolation work for internal staff notes?</div>
+    <div class="qa-a"><strong>Answer:</strong> At the controller level, if <code>req.user.role === 'customer'</code>, MongoDB executes <code>Comment.find({ ticketId, isInternal: false })</code>. Socket.io also broadcasts internal notes exclusively to the <code>role:agent</code>, <code>role:manager</code>, and <code>role:admin</code> rooms.</div>
+  </div>
+
+  <!-- Section 6: Live Links & Credentials -->
+  <h2>🌐 6. Project Quick Reference & Credentials</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Resource</th>
+        <th>URL / Details</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Live Application URL</strong></td>
+        <td><a href="https://helpdesk-ticketing-system-k3py.onrender.com/" target="_blank">https://helpdesk-ticketing-system-k3py.onrender.com/</a></td>
+      </tr>
+      <tr>
+        <td><strong>Swagger API Docs</strong></td>
+        <td><a href="https://helpdesk-ticketing-system-k3py.onrender.com/api/docs" target="_blank">https://helpdesk-ticketing-system-k3py.onrender.com/api/docs</a></td>
+      </tr>
+      <tr>
+        <td><strong>GitHub Repository</strong></td>
+        <td><a href="https://github.com/JosF337/javascript_l-t_ticketing" target="_blank">https://github.com/JosF337/javascript_l-t_ticketing</a></td>
+      </tr>
+      <tr>
+        <td><strong>Demo Accounts Password</strong></td>
+        <td><code>Password@123</code> (for <code>customer1@helpdesk.com</code>, <code>agent1@helpdesk.com</code>, <code>manager@helpdesk.com</code>)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="footer-note">
+    <span>SupportX Technical Presentation Document</span>
+    <span>Prepared by Joel Jacob Roji • CIA-3 Project P14</span>
+  </div>
+
+</body>
+</html>
