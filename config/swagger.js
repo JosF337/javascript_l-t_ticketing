@@ -23,8 +23,12 @@ const swaggerDocument = {
   },
   servers: [
     {
+      url: '/',
+      description: 'Live Cloud / Current Host'
+    },
+    {
       url: 'http://localhost:5000',
-      description: 'Local Express Server'
+      description: 'Local Development Server'
     }
   ],
   components: {
